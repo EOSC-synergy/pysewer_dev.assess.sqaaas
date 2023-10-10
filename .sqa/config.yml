@@ -1,0 +1,63 @@
+config:
+  credentials:
+  - id: sqaaas_tmp_cred-nerdy-cyan-goose
+    password_var: GIT_PASSWORD
+    username_var: GIT_USER
+  project_repos:
+    git.ufz.de/despot/pysewer_dev:
+      branch: main
+      credential_tmp: true
+      credentials_id: sqaaas_tmp_cred-nerdy-cyan-goose
+      repo: https://git.ufz.de/despot/pysewer_dev/
+    github.com/EOSC-synergy/sqaaas-tooling:
+      branch: release/1.7.11
+      repo: https://github.com/EOSC-synergy/sqaaas-tooling
+environment:
+  JPL_DOCKERFORCEBUILD: enabled
+  JPL_KEEPGOING: enabled
+sqa_criteria:
+  QC.Acc:
+    repos:
+      git.ufz.de/despot/pysewer_dev git:
+        commands:
+        - /usr/bin/env sh .sqa/script.whiny-periwinkle-hippopotamus.sh
+        container: qc.acc_wimpy-goldenrod-woodpecker
+  QC.Doc:
+    repos:
+      git.ufz.de/despot/pysewer_dev find_doc_files.py:
+        commands:
+        - /usr/bin/env sh .sqa/script.shaky-dandelion-squirt.sh
+        container: qc.doc_flaky-salmon-tarantula
+      git.ufz.de/despot/pysewer_dev git:
+        commands:
+        - /usr/bin/env sh .sqa/script.randy-auburn-camel.sh
+        container: qc.doc_frumpy-seashell-dingo
+      git.ufz.de/despot/pysewer_dev markdownlint:
+        commands:
+        - /usr/bin/env sh .sqa/script.craggy-harlequin-frigatebird.sh
+        container: qc.doc_shaky-tan-koala
+  QC.Lic:
+    repos:
+      git.ufz.de/despot/pysewer_dev licensee:
+        commands:
+        - /usr/bin/env sh .sqa/script.greasy-cream-wolverine.sh
+        container: qc.lic_gummy-beige-horse
+  QC.Sec:
+    repos:
+      git.ufz.de/despot/pysewer_dev bandit:
+        commands:
+        - /usr/bin/env sh .sqa/script.flaky-white-buzzard.sh
+        container: qc.sec_leaky-razzmatazz-hamster
+  QC.Sty:
+    repos:
+      git.ufz.de/despot/pysewer_dev flake8:
+        commands:
+        - /usr/bin/env sh .sqa/script.scummy-firebrick-panda.sh
+        container: qc.sty_woozy-teal-argentino
+  QC.Ver:
+    repos:
+      git.ufz.de/despot/pysewer_dev get_git_tags.py:
+        commands:
+        - /usr/bin/env sh .sqa/script.fuzzy-cerulean-salamander.sh
+        container: qc.ver_flimsy-amber-capuchin
+timeout: 5400
